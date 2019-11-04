@@ -4,8 +4,10 @@ import {
   View,
   Easing,
   StyleSheet,
-  Animated
+  Animated,
+  TouchableOpacity
 } from 'react-native'
+import Icons from 'react-native-vector-icons/MaterialIcons'
 
 const styles = StyleSheet.create({
   container: {
@@ -16,12 +18,17 @@ const styles = StyleSheet.create({
   line: {
     height: 5,
     width: 75
+  },
+  closeButton: {
+    alignItems: 'flex-end',
+    paddingTop: 2,
+    paddingRight: 2,
   }
 })
 
 class Loading extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.anim = {
       width: new Animated.Value(10),
       translateX: new Animated.Value(-50)
@@ -61,18 +68,39 @@ class Loading extends Component {
 
   render() {
     const { translateX, width } = this.anim
+    const {
+      onLoadingCloseButtonPress,
+    } = this.props
     if (this.props.loading) {
       return (
-        <View style={styles.container}>
-          <Animated.View style={[
-            styles.line,
-            {
-              backgroundColor: this.props.theme,
-              width,
-              transform: [{ translateX }]
-            }
-          ]}
-          />
+        <View style={{flex:1}}>
+          <View style={styles.closeButton}>
+          <TouchableOpacity
+              onPress={() => onLoadingCloseButtonPress()}
+            >
+            <Icons
+              name="close"
+              style={styles.closeButton}
+              iconStyle={{marginRight:5, marginTop:5}}
+              size={25}
+              underlayColor="transparent"
+              backgroundColor="transparent"
+              title="close"
+              color="white"
+            />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.container}>
+            <Animated.View style={[
+              styles.line,
+              {
+                backgroundColor: this.props.theme,
+                width,
+                transform: [{ translateX }]
+              }
+            ]}
+            />
+          </View>
         </View>
       )
     }

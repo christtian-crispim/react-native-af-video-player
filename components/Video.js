@@ -318,7 +318,7 @@ class Video extends Component {
         <Icons
           name="replay"
           size={60}
-          color={this.props.theme}
+          color={this.props.theme.center && 'white'}
           onPress={() => this.setState({ renderError: false })}
         />
       </Animated.View>
@@ -349,11 +349,16 @@ class Video extends Component {
       theme,
       onTimedMetadata,
       resizeMode,
+      moreIcon,
+      onLogoPress,
+      onLoadingCloseButtonPress,
       onMorePress,
       inlineOnly,
       playInBackground,
       playWhenInactive,
       controlDuration,
+      textTracks,
+      selectedTextTrack,
       hideFullScreenControl
     } = this.props
 
@@ -384,6 +389,8 @@ class Video extends Component {
         }
         <VideoPlayer
           {...checkSource(url)}
+          textTracks={textTracks}
+          selectedTextTrack={selectedTextTrack}
           paused={paused}
           resizeMode={resizeMode}
           repeat={loop}
@@ -420,6 +427,9 @@ class Video extends Component {
           logo={logo}
           title={title}
           more={!!onMorePress}
+          moreIcon={moreIcon}
+          onLoadingCloseButtonPress={() => onLoadingCloseButtonPress()}
+          onLogoPress={() => onLogoPress()}
           onMorePress={() => onMorePress()}
           theme={setTheme}
           inlineOnly={inlineOnly}
@@ -478,6 +488,8 @@ Video.propTypes = {
   theme: PropTypes.object,
   resizeMode: PropTypes.string,
   controlDuration: PropTypes.number,
+  textTracks: PropTypes.array,
+  selectedTextTrack: PropTypes.object
 }
 
 Video.defaultProps = {

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   View,
   StyleSheet,
+  TouchableOpacity,
   Text,
   Image
 } from 'react-native'
@@ -44,12 +45,14 @@ const TopBar = (props) => {
     more,
     title,
     theme,
-    onMorePress
+    moreIcon,
+    onMorePress,
+    onLogoPress,
   } = props
   return (
     <LinearGradient colors={['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']} style={styles.container}>
       <View style={styles.row}>
-        { logo && <Image style={styles.logo} resizeMode="contain" {...checkSource(logo)} />}
+      <TouchableOpacity onPress = {()=>onLogoPress()} >{ logo && <Image style={styles.logo} resizeMode="contain" {...checkSource(logo)} /> }</TouchableOpacity>
         <Text
           style={[styles.title, { color: theme.title }]}
           numberOfLines={1}
@@ -62,8 +65,8 @@ const TopBar = (props) => {
             style={styles.more}
             onPress={() => onMorePress()}
             paddingRight
-            iconOff="more-horiz"
-            iconOn="more-horiz"
+            iconOff={moreIcon}
+            iconOn={moreIcon}
             theme={theme.more}
             size={25}
           />
@@ -75,7 +78,7 @@ const TopBar = (props) => {
 
 TopBar.propTypes = {
   title: PropTypes.string.isRequired,
-  logo: PropTypes.string.isRequired,
+  logo: PropTypes.string,
   more: PropTypes.bool.isRequired,
   onMorePress: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired

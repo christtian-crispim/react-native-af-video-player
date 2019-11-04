@@ -106,9 +106,12 @@ class Controls extends Component {
   }
 
   loading() {
+    const {
+      onLoadingCloseButtonPress,
+    } = this.props
     return (
       <View style={styles.container}>
-        <Loading theme={this.props.theme.loading} />
+        <Loading theme={this.props.theme.loading} onLoadingCloseButtonPress={() => onLoadingCloseButtonPress()} />
       </View>
     )
   }
@@ -121,7 +124,9 @@ class Controls extends Component {
       loading,
       logo,
       more,
+      moreIcon,
       onMorePress,
+      onLogoPress,
       title,
       progress,
       currentTime,
@@ -139,7 +144,9 @@ class Controls extends Component {
           <TopBar
             title={title}
             logo={logo}
+            moreIcon={moreIcon}
             more={more}
+            onLogoPress={() => onLogoPress()}
             onMorePress={() => onMorePress()}
             theme={{ title: theme.title, more: theme.more }}
           />
@@ -199,7 +206,7 @@ Controls.propTypes = {
   currentTime: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  logo: PropTypes.string.isRequired,
+  logo: PropTypes.string,
   theme: PropTypes.object.isRequired
 }
 
